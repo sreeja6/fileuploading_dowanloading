@@ -1,0 +1,81 @@
+{% load static %}
+<html>
+<head>
+    <style>
+        #tab1
+        {
+            margin-top: 80px;
+            height: 250px;
+            width: 400px;
+            border-color: black;
+        }
+        #first_row
+        {
+            font-size: 35px;
+            color: red;
+            background-color: black;
+            font-family: "Agency FB";
+        }
+        .second_row
+        {
+            font-size: 30px;
+            text-align: center;
+        }
+        #last_row
+        {
+            font-size: 25px;
+            color: red;
+            background-color:black ;
+        }
+        .tab2_first_row
+        {
+          color: red;
+          font-size: 25px;
+
+        }
+         .tab2_second_row
+        {
+          color:purple;
+          font-size: 20px;
+
+        }
+    </style>
+</head>
+    <body>
+    <form action="{% url 'save_file' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<table align="center" border="4" id="tab1">
+    <tr><th id="first_row">File uploading and downloading</th></tr>
+    <tr><th><input type="text" placeholder="Name" name="f1" required class="second_row"></th></tr>
+    <tr><th><input type="file" name="f2" required class="second_row"></th></tr>
+    <tr><th><button type="submit" id="last_row">Upload</button></th></tr>
+</table>
+        {% if data %}
+        <table align="center" border="2" width="500" height="200" id="tab2">
+            <tr>
+                <th class="tab2_first_row">No</th>
+                <th class="tab2_first_row">Name</th>
+                <th class="tab2_first_row">Path</th>
+                <th class="tab2_first_row">Dowanload</th>
+            </tr>
+        {% for x in data %}
+            <tr>
+            <th class="tab2_second_row" width="50">{{ x.No }}</th>
+            <th class="tab2_second_row" width="80">{{ x.Name }}</th>
+            <th class="tab2_second_row" width="150">{{ x.file }}</th>
+            <th class="tab2_second_row">
+                <a download=" " href="{{ x.file }}">
+                <img src="{% static 'images/dowanload.png' %}" height="30" width="50">
+                </a>
+
+            </th>
+
+            </tr>
+        {% endfor %}
+
+        </table>
+        {% endif %}
+    </form>
+
+</body>
+</html>
